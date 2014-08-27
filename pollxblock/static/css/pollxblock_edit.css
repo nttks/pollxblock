@@ -1,0 +1,22 @@
+/* CSS for PollXBlock Studio View */
+
+label#label_id, label#label_text {
+    margin-right: 0;
+    margin-left: 4px;
+    text-align: center;
+}
+
+label#label_id, input.group-id {
+    width: 15% !important;
+}
+
+label#label_text, input.group-text {
+    width: 30% !important;
+}
+
+input#edit_reset {
+    min-width: 20px;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}

@@ -1,0 +1,55 @@
+<div class="wrapper-comp-settings is-active editor-with-buttons" id="settings-tab">
+    <ul class="list-input settings-list">
+        <li class="field comp-setting-entry is-set">
+            <div class="wrapper-comp-setting">
+                <label class="label setting-label">Title</label>
+                <input class="input setting-input edit-display-name" id="edit_display_name" value="{{display_name}}" type="text">
+                <span class="tip setting-help">Example: Poll Question</span>
+            </div>
+        </li>
+        <li class="field comp-setting-entry is-set">
+            <div class="wrapper-comp-setting">
+                <label class="label setting-label">Question</label>
+                <input class="input setting-input edit-question" id="edit_question" value="{{question}}" type="text">
+                <span class="tip setting-help">Example: Did you enjoy this video?</span>
+            </div>
+        </li>
+        <li class="field comp-setting-entry is-set">
+            <div class="wrapper-comp-setting">
+                <label class="label setting-label">Number of Available Answers</label>
+                <input class="input setting-input setting-input-number edit-number_of_groups" id="edit_number_of_answers" value="{{number_of_answers}}" type="number" min="2" max="20" step="1">
+                <span class="tip setting-help">Example: 3 (min: 2, max: 20)</span>
+            </div>
+        </li>
+        <li class="field comp-setting-entry is-set">
+            <div id="panel2" class="wrapper-comp-setting">
+                <label class="label setting-label">Answer</label><label class="label setting-label group-id" id="label_id">ID</label><label class="label setting-label group-text" id="label_text">Text</label>
+                <span class="tip setting-help">ID example: yes<br/>Text example: Yes</span>
+                {% for answer in answers %}
+                    <p>
+                        <label class="label setting-label">Answer {{forloop.counter}}</label>
+                        <input class="input setting-input group-id" name="answer{{forloop.counter}}_id" id="answer{{forloop.counter}}_id" value="{{answer.id}}" type="text">
+                        <input class="input setting-input group-text" name="answer{{forloop.counter}}_text" id="answer{{forloop.counter}}_text" value="{{answer.text}}" type="text">
+                    </p>
+                {% endfor %}
+            </div>
+        </li>
+        <li class="field comp-setting-entry is-set">
+            <div class="wrapper-comp-setting">
+                <label class="label setting-label">Reset</label>
+                <input class="input setting-input setting-input-checkbox edit-reset" id="edit_reset" type="checkbox" {% if reset %} checked {% endif %}>  Yes
+            </div>
+        </li>
+    </ul>
+    <div class="xblock-actions">
+        <span class="xblock-editor-error-message"></span>
+        <ul>
+            <li class="action-item">
+                <a href="#" class="save-button action-primary action">Save</a>
+            </li>
+            <li class="action-item">
+                <a href="#" class="button cancel-button">Cancel</a>
+            </li>
+        </ul>
+    </div>
+</div>

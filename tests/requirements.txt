@@ -1,0 +1,7 @@
+mock
+nose
+coverage
+rednose
+django-nose
+
+-e .
