@@ -116,8 +116,9 @@ function PollUtil (runtime, element, pollType) {
                 type: "POST",
                 url: self.voteUrl,
                 data: JSON.stringify(self.surveyChoices()),
-                success: self.onSubmit
-            })
+                success: self.onSubmit,
+                complete: self.onComplete,
+            });
         });
         // If the user has refreshed the page, they may still have an answer
         // selected and the submit button should be enabled.
@@ -193,6 +194,21 @@ function PollUtil (runtime, element, pollType) {
         }
         // Used if results are not private, to show the user how other students voted.
         self.getResults();
+    };
+
+    this.onComplete = function () {
+        // [Issue#7] Update attendance status
+        var updateAttendanceStatusUrl = ($('div.poll-block', element).data('update-attendance-status-url') || '')
+            .replace('{}', $(element).data('course-id'));
+        if (updateAttendanceStatusUrl) {
+            $.ajax({
+                type: "POST",
+                url: updateAttendanceStatusUrl,
+                headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            }).error(function () {
+                console.log('Error update attendance status');
+            });
+        }
     };
 
     function getStatus() {
