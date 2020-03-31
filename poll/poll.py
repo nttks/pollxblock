@@ -1145,7 +1145,10 @@ class SurveyBlock(PollBase, CSVExportMixin):
         result['submissions_count'] = self.submissions_count
         result['max_submissions'] = self.max_submissions
         from util.ga_attendance_status import AttendanceStatusExecutor
-        AttendanceStatusExecutor.update_attendance_status(getattr(self.runtime, 'course_id', 'course_id'), getattr(self.runtime, 'user_id', 'user_id'))
+        from xmodule.modulestore.django import modulestore
+        AttendanceStatusExecutor.update_attendance_status(
+            modulestore().get_course(getattr(self.runtime, 'course_id', 'course_id')),
+            getattr(self.runtime, 'user_id', 'user_id'))
         return result
 
     @XBlock.json_handler
