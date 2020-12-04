@@ -29,6 +29,7 @@ import time
 from markdown import markdown
 import pkg_resources
 from webob import Response
+from opaque_keys.edx.keys import CourseKey
 
 from xblock.core import XBlock
 from xblock.fields import Scope, String, Dict, List, Boolean, Integer
@@ -37,6 +38,10 @@ from xblockutils.publish_event import PublishEventMixin
 from xblockutils.resources import ResourceLoader
 from xblockutils.settings import XBlockWithSettingsMixin, ThemableXBlockMixin
 from .utils import _
+from lms.djangoapps.courseware.model_data import FieldDataCache
+from lms.djangoapps.courseware.ga_progress_restriction import ProgressRestriction
+from lms.djangoapps.courseware.module_render import get_module_for_descriptor
+from xmodule.modulestore.django import modulestore
 
 
 try:
@@ -684,10 +689,28 @@ class PollBlock(PollBase, CSVExportMixin):
         self.tally[choice] += 1
         self.submissions_count += 1
 
+        section_id = str(self.POST.get('section_id', ''))
+        section_location_name = section_id[section_id.rfind('@') + 1:] if section_id else None
+        course = modulestore().get_course(CourseKey.from_string(data['course_id']))
+        field_data_cache = FieldDataCache.cache_for_descriptor_descendents(course.id, self.user, course, depth=2)
+        course_module = get_module_for_descriptor(self.user, self, course, field_data_cache, course.id,
+                                                  course=course)
+
+        progress_restriction = ProgressRestriction(course, self.user, course_module)
+
+        restricted_list = progress_restriction.get_restricted_list_in_section(section_location_name)
+        restricted_chapters = progress_restriction.get_restricted_chapters()
+        restricted_sections = progress_restriction.get_restricted_sections()
+        restricted_verticals = progress_restriction.get_restricted_verticals()
+
         result['success'] = True
         result['can_vote'] = self.can_vote()
         result['submissions_count'] = self.submissions_count
         result['max_submissions'] = self.max_submissions
+        result['restricted_list'] = restricted_list
+        result['restricted_chapters'] = restricted_chapters
+        result['restricted_sections'] = restricted_sections
+        result['restricted_verticals'] = restricted_verticals
 
         self.send_vote_event({'choice': self.choice})
 
