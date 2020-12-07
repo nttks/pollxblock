@@ -176,22 +176,6 @@ function PollUtil (runtime, element, pollType) {
         if (data['max_submissions'] > 1) {
             $('.poll-submissions-count', element).show();
         }
-        if ($('div.poll-block', element).data('private')) {
-            // User may be changing their vote. Give visual feedback that it was accepted.
-            var thanks = $('.poll-voting-thanks', element);
-            thanks.removeClass('poll-hidden');
-            thanks.fadeOut(0).fadeIn('slow', 'swing');
-            $('.poll-feedback-container', element).removeClass('poll-hidden');
-            if (!can_vote) {
-                // Disable all types of input within the element,
-                // Radio button choices and the submit button.
-                $('input', element).attr('disabled', true);
-            } else {
-                // Enable the submit button.
-                self.enableSubmit();
-            }
-            return;
-        }
         if (data.restricted_list !== 'undefined') {
               $('.progress_restriction_info .restricted').data('list', data.restricted_list);
             }
@@ -221,6 +205,22 @@ function PollUtil (runtime, element, pollType) {
                 $($('.vertical-name')[restricted_verticals[vertical_idx]]).addClass('vertical_restricted');
               }
             }
+        }
+        if ($('div.poll-block', element).data('private')) {
+            // User may be changing their vote. Give visual feedback that it was accepted.
+            var thanks = $('.poll-voting-thanks', element);
+            thanks.removeClass('poll-hidden');
+            thanks.fadeOut(0).fadeIn('slow', 'swing');
+            $('.poll-feedback-container', element).removeClass('poll-hidden');
+            if (!can_vote) {
+                // Disable all types of input within the element,
+                // Radio button choices and the submit button.
+                $('input', element).attr('disabled', true);
+            } else {
+                // Enable the submit button.
+                self.enableSubmit();
+            }
+            return;
         }
         // Used if results are not private, to show the user how other students voted.
         self.getResults();
