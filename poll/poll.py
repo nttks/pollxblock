@@ -790,23 +790,22 @@ class SurveyBlock(PollBase, CSVExportMixin):
         ],
         scope=Scope.settings, help=_("Answer choices for this Survey")
     )
-    default_questions = [i for i in range(int(time.time()), int(time.time()) + 3, 1)]
     questions = List(
         default=[
-            (default_questions[0], {'label': _('Are you enjoying the course?'), 'img': None, 'img_alt': None}),
-            (default_questions[1], {
+            (time.time(), {'label': _('Are you enjoying the course?'), 'img': None, 'img_alt': None}),
+            (time.time(), {
                 'label': _('Would you recommend this course to your friends?'),
                 'img': None,
                 'img_alt': None
             }),
-            (default_questions[2], {'label': _('Do you think you will learn a lot?'), 'img': None, 'img_alt': None}),
+            (time.time(), {'label': _('Do you think you will learn a lot?'), 'img': None, 'img_alt': None}),
         ],
         scope=Scope.settings, help=_("Questions for this Survey")
     )
     tally = Dict(
         default={
-            default_questions[0]: {'Y': 0, 'N': 0, 'M': 0}, default_questions[1]: {'Y': 0, 'N': 0, 'M': 0},
-            default_questions[2]: {'Y': 0, 'N': 0, 'M': 0}},
+            time.time(): {'Y': 0, 'N': 0, 'M': 0}, time.time(): {'Y': 0, 'N': 0, 'M': 0},
+            time.time(): {'Y': 0, 'N': 0, 'M': 0}},
         scope=Scope.user_state_summary,
         help=_("Total tally of answers from students.")
     )
