@@ -37,6 +37,7 @@ from xblockutils.publish_event import PublishEventMixin
 from xblockutils.resources import ResourceLoader
 from xblockutils.settings import XBlockWithSettingsMixin, ThemableXBlockMixin
 from .utils import _
+import time
 
 
 try:
@@ -789,22 +790,23 @@ class SurveyBlock(PollBase, CSVExportMixin):
         ],
         scope=Scope.settings, help=_("Answer choices for this Survey")
     )
+    default_questions = [i for i in range(int(time.time()), int(time.time()) + 3, 1)]
     questions = List(
         default=[
-            ('enjoy', {'label': _('Are you enjoying the course?'), 'img': None, 'img_alt': None}),
-            ('recommend', {
+            (default_questions[0], {'label': _('Are you enjoying the course?'), 'img': None, 'img_alt': None}),
+            (default_questions[1], {
                 'label': _('Would you recommend this course to your friends?'),
                 'img': None,
                 'img_alt': None
             }),
-            ('learn', {'label': _('Do you think you will learn a lot?'), 'img': None, 'img_alt': None}),
+            (default_questions[2], {'label': _('Do you think you will learn a lot?'), 'img': None, 'img_alt': None}),
         ],
         scope=Scope.settings, help=_("Questions for this Survey")
     )
     tally = Dict(
         default={
-            'enjoy': {'Y': 0, 'N': 0, 'M': 0}, 'recommend': {'Y': 0, 'N': 0, 'M': 0},
-            'learn': {'Y': 0, 'N': 0, 'M': 0}},
+            default_questions[0]: {'Y': 0, 'N': 0, 'M': 0}, default_questions[1]: {'Y': 0, 'N': 0, 'M': 0},
+            default_questions[2]: {'Y': 0, 'N': 0, 'M': 0}},
         scope=Scope.user_state_summary,
         help=_("Total tally of answers from students.")
     )
