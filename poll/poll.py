@@ -37,7 +37,7 @@ from xblockutils.publish_event import PublishEventMixin
 from xblockutils.resources import ResourceLoader
 from xblockutils.settings import XBlockWithSettingsMixin, ThemableXBlockMixin
 from .utils import _
-import time
+from datetime import datetime
 
 
 try:
@@ -790,7 +790,7 @@ class SurveyBlock(PollBase, CSVExportMixin):
         ],
         scope=Scope.settings, help=_("Answer choices for this Survey")
     )
-    id_time = int(time.time() * 1000)
+    id_time = datetime.now().strftime('%Y%m%d%H%M%S%f')
     questions = List(
         default=[
             (id_time, {'label': _('Are you enjoying the course????'), 'img': None, 'img_alt': None}),
