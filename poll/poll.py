@@ -790,23 +790,23 @@ class SurveyBlock(PollBase, CSVExportMixin):
         ],
         scope=Scope.settings, help=_("Answer choices for this Survey")
     )
-    time = int(time.time() * 1000)
+    id_time = int(time.time() * 1000)
     questions = List(
         default=[
-            (time, {'label': _('Are you enjoying the course?'), 'img': None, 'img_alt': None}),
-            (time, {
+            (id_time, {'label': _('Are you enjoying the course????'), 'img': None, 'img_alt': None}),
+            (id_time, {
                 'label': _('Would you recommend this course to your friends?'),
                 'img': None,
                 'img_alt': None
             }),
-            (time, {'label': _('Do you think you will learn a lot?'), 'img': None, 'img_alt': None}),
+            (id_time, {'label': _('Do you think you will learn a lot?'), 'img': None, 'img_alt': None}),
         ],
         scope=Scope.settings, help=_("Questions for this Survey")
     )
     tally = Dict(
         default={
-            time: {'Y': 0, 'N': 0, 'M': 0}, time: {'Y': 0, 'N': 0, 'M': 0},
-            time: {'Y': 0, 'N': 0, 'M': 0}},
+            id_time: {'Y': 0, 'N': 0, 'M': 0}, id_time: {'Y': 0, 'N': 0, 'M': 0},
+            id_time: {'Y': 0, 'N': 0, 'M': 0}},
         scope=Scope.user_state_summary,
         help=_("Total tally of answers from students.")
     )
