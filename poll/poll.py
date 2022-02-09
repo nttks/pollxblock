@@ -25,6 +25,7 @@ from collections import OrderedDict
 import functools
 import json
 import time
+import random, string
 
 from markdown import markdown
 import pkg_resources
@@ -790,22 +791,24 @@ class SurveyBlock(PollBase, CSVExportMixin):
         ],
         scope=Scope.settings, help=_("Answer choices for this Survey")
     )
+    num = string.ascii_letters + string.digits
+
     questions = List(
         default=[
-            (datetime.now().strftime('%Y%m%d%H%M%S%f'), {'label': _('Are you enjoying the course????'), 'img': None, 'img_alt': None}),
-            (datetime.now().strftime('%Y%m%d%H%M%S%f'), {
+            ("".join(random.sample(num, 20)), {'label': _('Are you enjoying the course?'), 'img': None, 'img_alt': None}),
+            ("".join(random.sample(num, 20)), {
                 'label': _('Would you recommend this course to your friends?'),
                 'img': None,
                 'img_alt': None
             }),
-            (datetime.now().strftime('%Y%m%d%H%M%S%f'), {'label': _('Do you think you will learn a lot?'), 'img': None, 'img_alt': None}),
+            ("".join(random.sample(num, 20)), {'label': _('Do you think you will learn a lot?'), 'img': None, 'img_alt': None}),
         ],
         scope=Scope.settings, help=_("Questions for this Survey")
     )
     tally = Dict(
         default={
-            datetime.now().strftime('%Y%m%d%H%M%S%f'): {'Y': 0, 'N': 0, 'M': 0}, datetime.now().strftime('%Y%m%d%H%M%S%f'): {'Y': 0, 'N': 0, 'M': 0},
-            datetime.now().strftime('%Y%m%d%H%M%S%f'): {'Y': 0, 'N': 0, 'M': 0}},
+            "".join(random.sample(num, 20)): {'Y': 0, 'N': 0, 'M': 0}, "".join(random.sample(num, 20)): {'Y': 0, 'N': 0, 'M': 0},
+            "".join(random.sample(num, 20)): {'Y': 0, 'N': 0, 'M': 0}},
         scope=Scope.user_state_summary,
         help=_("Total tally of answers from students.")
     )
