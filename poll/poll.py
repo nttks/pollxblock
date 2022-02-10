@@ -795,14 +795,14 @@ class SurveyBlock(PollBase, CSVExportMixin):
 
     questions = List(
         default=[
-            ("".join(random.sample(num, 20)),
+            (datetime.now().strftime('%Y%m%d%H%M%S%f'),
              {'label': _('Are you enjoying the course?'), 'img': None, 'img_alt': None}),
-            ("".join(random.sample(num, 20)), {
+            (datetime.now().strftime('%Y%m%d%H%M%S%f'), {
                 'label': _('Would you recommend this course to your friends?'),
                 'img': None,
                 'img_alt': None
             }),
-            ("".join(random.sample(num, 20)),
+            (datetime.now().strftime('%Y%m%d%H%M%S%f'),
              {'label': _('Do you think you will learn a lot?'), 'img': None, 'img_alt': None}),
         ],
         # default=[],
@@ -810,9 +810,9 @@ class SurveyBlock(PollBase, CSVExportMixin):
     )
     tally = Dict(
         default={
-            "".join(random.sample(num, 20)): {'Y': 0, 'N': 0, 'M': 0},
-            "".join(random.sample(num, 20)): {'Y': 0, 'N': 0, 'M': 0},
-            "".join(random.sample(num, 20)): {'Y': 0, 'N': 0, 'M': 0}},
+            datetime.now().strftime('%Y%m%d%H%M%S%f'): {'Y': 0, 'N': 0, 'M': 0},
+            datetime.now().strftime('%Y%m%d%H%M%S%f'): {'Y': 0, 'N': 0, 'M': 0},
+            datetime.now().strftime('%Y%m%d%H%M%S%f'): {'Y': 0, 'N': 0, 'M': 0}},
         # default={},
         scope=Scope.user_state_summary,
         help=_("Total tally of answers from students.")
