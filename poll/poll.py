@@ -794,26 +794,26 @@ class SurveyBlock(PollBase, CSVExportMixin):
     num = string.ascii_letters + string.digits
 
     questions = List(
-        # default=[
-        #     ("".join(random.sample(num, 20)),
-        #      {'label': _('Are you enjoying the course?'), 'img': None, 'img_alt': None}),
-        #     ("".join(random.sample(num, 20)), {
-        #         'label': _('Would you recommend this course to your friends?'),
-        #         'img': None,
-        #         'img_alt': None
-        #     }),
-        #     ("".join(random.sample(num, 20)),
-        #      {'label': _('Do you think you will learn a lot?'), 'img': None, 'img_alt': None}),
-        # ],
-        default=[],
+        default=[
+            ("".join(random.sample(num, 20)),
+             {'label': _('Are you enjoying the course?'), 'img': None, 'img_alt': None}),
+            ("".join(random.sample(num, 20)), {
+                'label': _('Would you recommend this course to your friends?'),
+                'img': None,
+                'img_alt': None
+            }),
+            ("".join(random.sample(num, 20)),
+             {'label': _('Do you think you will learn a lot?'), 'img': None, 'img_alt': None}),
+        ],
+        # default=[],
         scope=Scope.settings, help=_("Questions for this Survey")
     )
     tally = Dict(
-        # default={
-        #     "".join(random.sample(num, 20)): {'Y': 0, 'N': 0, 'M': 0},
-        #     "".join(random.sample(num, 20)): {'Y': 0, 'N': 0, 'M': 0},
-        #     "".join(random.sample(num, 20)): {'Y': 0, 'N': 0, 'M': 0}},
-        default={},
+        default={
+            "".join(random.sample(num, 20)): {'Y': 0, 'N': 0, 'M': 0},
+            "".join(random.sample(num, 20)): {'Y': 0, 'N': 0, 'M': 0},
+            "".join(random.sample(num, 20)): {'Y': 0, 'N': 0, 'M': 0}},
+        # default={},
         scope=Scope.user_state_summary,
         help=_("Total tally of answers from students.")
     )
