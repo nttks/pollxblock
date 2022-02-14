@@ -38,7 +38,6 @@ from xblockutils.publish_event import PublishEventMixin
 from xblockutils.resources import ResourceLoader
 from xblockutils.settings import XBlockWithSettingsMixin, ThemableXBlockMixin
 from .utils import _
-from datetime import datetime
 
 
 try:
@@ -784,36 +783,17 @@ class SurveyBlock(PollBase, CSVExportMixin):
     # but either way we want it to say 'Poll' by default on the page.
     block_name = String(default=_('Poll'))
     answers = List(
-        default=[
-            ('Y', _('Yes')),
-            ('N', _('No')),
-            ('M', _('Maybe'))
-        ],
+        default=[],
         scope=Scope.settings, help=_("Answer choices for this Survey")
     )
     num = string.ascii_letters + string.digits
 
     questions = List(
-        default=[
-            (datetime.now().strftime('%Y%m%d%H%M%S%f'),
-             {'label': _('Are you enjoying the course?'), 'img': None, 'img_alt': None}),
-            (datetime.now().strftime('%Y%m%d%H%M%S%f'), {
-                'label': _('Would you recommend this course to your friends?'),
-                'img': None,
-                'img_alt': None
-            }),
-            (datetime.now().strftime('%Y%m%d%H%M%S%f'),
-             {'label': _('Do you think you will learn a lot?'), 'img': None, 'img_alt': None}),
-        ],
-        # default=[],
+        default=[],
         scope=Scope.settings, help=_("Questions for this Survey")
     )
     tally = Dict(
-        default={
-            datetime.now().strftime('%Y%m%d%H%M%S%f'): {'Y': 0, 'N': 0, 'M': 0},
-            datetime.now().strftime('%Y%m%d%H%M%S%f'): {'Y': 0, 'N': 0, 'M': 0},
-            datetime.now().strftime('%Y%m%d%H%M%S%f'): {'Y': 0, 'N': 0, 'M': 0}},
-        # default={},
+        default={},
         scope=Scope.user_state_summary,
         help=_("Total tally of answers from students.")
     )
