@@ -782,29 +782,16 @@ class SurveyBlock(PollBase, CSVExportMixin):
     # but either way we want it to say 'Poll' by default on the page.
     block_name = String(default=_('Poll'))
     answers = List(
-        default=[
-            ('Y', _('Yes')),
-            ('N', _('No')),
-            ('M', _('Maybe'))
-        ],
+        default=[],
         scope=Scope.settings, help=_("Answer choices for this Survey")
     )
+
     questions = List(
-        default=[
-            ('enjoy', {'label': _('Are you enjoying the course?'), 'img': None, 'img_alt': None}),
-            ('recommend', {
-                'label': _('Would you recommend this course to your friends?'),
-                'img': None,
-                'img_alt': None
-            }),
-            ('learn', {'label': _('Do you think you will learn a lot?'), 'img': None, 'img_alt': None}),
-        ],
+        default=[],
         scope=Scope.settings, help=_("Questions for this Survey")
     )
     tally = Dict(
-        default={
-            'enjoy': {'Y': 0, 'N': 0, 'M': 0}, 'recommend': {'Y': 0, 'N': 0, 'M': 0},
-            'learn': {'Y': 0, 'N': 0, 'M': 0}},
+        default={},
         scope=Scope.user_state_summary,
         help=_("Total tally of answers from students.")
     )
