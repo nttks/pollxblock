@@ -25,7 +25,6 @@ from collections import OrderedDict
 import functools
 import json
 import time
-import random, string
 
 from markdown import markdown
 import pkg_resources
@@ -786,7 +785,6 @@ class SurveyBlock(PollBase, CSVExportMixin):
         default=[],
         scope=Scope.settings, help=_("Answer choices for this Survey")
     )
-    num = string.ascii_letters + string.digits
 
     questions = List(
         default=[],
